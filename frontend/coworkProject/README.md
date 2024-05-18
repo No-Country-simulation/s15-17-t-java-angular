@@ -1,6 +1,9 @@
 # React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Para ejecutar el proyecto ubicarse en /coworkProject y ejecutar run npm dev 
+
+
+
 
 Currently, two official plugins are available:
 
