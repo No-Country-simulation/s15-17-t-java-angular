@@ -1,3 +1,13 @@
 # s15-17-t-java-angular
-s15-17-t-java-angular
-prueba
+
+COMISION: s15-17-t-java-angular
+
+TITULO: CoWorkedSpace
+
+INDUSTRIA: Plataforma de busqueda
+
+(imagen logo)
+
+DESCRIPCION:
+
+Plataforma que conecta a trabajadores independientes, emprendedores y pequeñas empresas con espacios de coworking disponibles en su área. Esta aplicación ofrece una solución conveniente para encontrar, reservar y gestionar espacios de trabajo compartidos de manera eficiente.
