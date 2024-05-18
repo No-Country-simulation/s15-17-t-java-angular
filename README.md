@@ -4,9 +4,10 @@ COMISION: s15-17-t-java-angular
 
 TITULO: CoWorkedSpace
 
-INDUSTRIA: Plataforma de busqueda
+INDUSTRIA: Plataforma de búsqueda
 
 (imagen logo)
+
 
 DESCRIPCION:
 
