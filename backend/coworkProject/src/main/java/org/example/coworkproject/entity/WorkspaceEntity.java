@@ -3,6 +3,8 @@ package org.example.coworkproject.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
+import java.util.List;
+
 @Entity
 @Getter
 @Setter
@@ -29,4 +31,7 @@ public class WorkspaceEntity {
 
     @Column(name = "PRICE")
     private Float price;
+
+    @ManyToMany(mappedBy = "workspaces")
+    private List<QualitiesEntity> qualities;
 }
