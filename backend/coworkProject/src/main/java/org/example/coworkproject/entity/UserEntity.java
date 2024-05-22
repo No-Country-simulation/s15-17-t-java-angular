@@ -1,14 +1,12 @@
 package org.example.coworkproject.entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -27,6 +25,9 @@ public class UserEntity implements UserDetails {
     private String password;
     private String name;
     private String lastName;
+
+    @ManyToMany
+    private List<WorkspaceEntity> workSpaces;
 
     // String o Images??
     private String profilePicture;

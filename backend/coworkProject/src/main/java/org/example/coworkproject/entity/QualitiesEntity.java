@@ -1,5 +1,6 @@
 package org.example.coworkproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
@@ -19,7 +20,7 @@ public class QualitiesEntity {
     @Column(name = "id_quality")
     private Long idQuality;
 
-    @Column(name = "NOMBRE")
+    @Column(name = "nombre")
     private String nombre;
 
     @JoinTable(
@@ -27,6 +28,8 @@ public class QualitiesEntity {
             joinColumns = @JoinColumn(name = "idQuality", nullable = false),
             inverseJoinColumns = @JoinColumn(name="idWorkspace", nullable = false)
     )
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL)
     private List<WorkspaceEntity> workspaces;
+
 }
