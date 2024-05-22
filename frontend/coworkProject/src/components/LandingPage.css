@@ -1,0 +1,13 @@
+/* src/components/LandingPage.css */
+.landing-page {
+    @apply bg-black text-white h-screen flex flex-col justify-center items-center text-center;
+  }
+  
+  .landing-page h1 {
+    @apply text-3xl mb-4;
+  }
+  
+  .landing-page h2 {
+    @apply text-xl max-w-xl;
+  }
+  
