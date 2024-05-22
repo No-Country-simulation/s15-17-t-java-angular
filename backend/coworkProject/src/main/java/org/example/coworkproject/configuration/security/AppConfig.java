@@ -1,7 +1,8 @@
 package org.example.coworkproject.configuration.security;
 
 import lombok.RequiredArgsConstructor;
-import org.hibernate.ObjectNotFoundException;
+import org.example.coworkproject.repository.UserRepository;
+import org.example.coworkproject.exception.ObjectNotFoundException;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
