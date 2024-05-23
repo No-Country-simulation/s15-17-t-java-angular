@@ -28,8 +28,6 @@ public class UserEntity implements UserDetails {
 
     @ManyToMany
     private List<WorkspaceEntity> workSpaces;
-
-    // String o Images??
     private String profilePicture;
 
 
