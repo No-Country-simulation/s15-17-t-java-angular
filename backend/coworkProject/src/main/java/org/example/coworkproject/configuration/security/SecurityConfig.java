@@ -23,6 +23,8 @@ import org.springframework.security.web.util.matcher.RequestMatcher;
 public class SecurityConfig {
 
     private final AuthenticationProvider authenticationProvider;
+
+
     private final JwtFilter jwtFilter;
 
     @Bean
