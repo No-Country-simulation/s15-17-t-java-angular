@@ -37,7 +37,7 @@ export const LoginForm: React.FC = () => {
 				{errors.password && <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>}
 			</div>
 
-			<button type="submit" className="w-full text-white bg-[#31543D] hover:bg-[#A67C52] focus:ring-4 focus:outline-none focus:ring-[#31543D] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Login</button>
+			<button type="submit" className="w-full text-white bg-[#31543D] hover:bg-[#A67C52] focus:ring-4 focus:outline-none focus:ring-[#31543D] font-medium rounded-lg text-sm px-5 py-2.5 text-center">Iniciar Sesión</button>
 		</form>
 	);
 };
