@@ -1,3 +1,4 @@
+import { RegisterForm } from "./RegisterForm/RegisterForm";
 
 const RegisterView = () => {
   return (
