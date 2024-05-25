@@ -2,8 +2,11 @@ package org.example.coworkproject.controller;
 
 import org.example.coworkproject.dto.request.LoginRequestDTO;
 import org.example.coworkproject.dto.response.LoginResponseDTO;
+import org.example.coworkproject.dto.response.RegisterResponseDTO;
+import org.example.coworkproject.exception.MyException;
 import org.example.coworkproject.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -18,13 +21,16 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<LoginResponseDTO> login(@RequestBody LoginRequestDTO requestDTO) {
+    public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) throws MyException {
 
         LoginResponseDTO loginResponseDTO = loginService.login(requestDTO);
 
-        return ResponseEntity.ok()
-                .header("Authorization", "Bearer" + loginResponseDTO.getToken())
-                .body(loginResponseDTO);
+        if (loginResponseDTO == null) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("Incorrect credentials or user not found");
+        } else {
+            return ResponseEntity.status(HttpStatus.OK)
+                    .header("Authorization", "Bearer" + loginResponseDTO.getToken())
+                    .body(loginResponseDTO);
+        }
     }
-
 }
