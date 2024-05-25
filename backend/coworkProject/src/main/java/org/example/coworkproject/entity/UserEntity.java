@@ -15,7 +15,6 @@ import java.util.List;
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-
 public class UserEntity implements UserDetails {
 
     @Id
@@ -37,10 +36,6 @@ public class UserEntity implements UserDetails {
         return null;
     }
 
-    @Override
-    public String getPassword() {
-        return null;
-    }
 
     @Override
     public String getUsername() {
