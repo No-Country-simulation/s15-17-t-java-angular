@@ -4,6 +4,7 @@ import org.example.coworkproject.configuration.security.jwt.JwtService;
 import org.example.coworkproject.dto.request.LoginRequestDTO;
 import org.example.coworkproject.dto.response.LoginResponseDTO;
 import org.example.coworkproject.exception.CustomAuthenticationException;
+import org.example.coworkproject.exception.MyException;
 import org.example.coworkproject.repository.UserRepository;
 import org.example.coworkproject.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,37 +32,30 @@ public class LoginServiceImpl implements LoginService {
     }
 
 
-    @Override
-    public LoginResponseDTO login(LoginRequestDTO requestDTO) {
-
+    public LoginResponseDTO login(LoginRequestDTO requestDTO) throws MyException {
         try {
-            authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(requestDTO.getEmail(), requestDTO.getPassword()));
-        } catch (BadCredentialsException ex) {
-            throw new CustomAuthenticationException("Incorrect password");
-        } catch (AuthenticationException ex) {
-            throw new CustomAuthenticationException("Authentication failed");
-        }
-
-        var user = userRepository.findUserByEmail(requestDTO.getEmail()).orElse(null);
-
-        if (user == null) {
-            System.out.println("It wasn't possible to find a user with the email: " + requestDTO.getEmail());
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(
+                            requestDTO.getEmail(),
+                            requestDTO.getPassword()
+                    )
+            );
+        } catch (BadCredentialsException e) {
+            System.out.println("Bad credentials for email: " + requestDTO.getEmail());
             return null;
         }
 
+        var user = userRepository.findUserByEmail(requestDTO.getEmail())
+                .orElseThrow(() -> new MyException("User not found"));
+
         var jwtToken = jwtService.generateToken(user);
 
-        String email = user.getEmail();
-        Long id_user = user.getId_user();
-        String name = user.getName();
-        String lastName = user.getLastName();
-
         return LoginResponseDTO.builder()
-                .email(email)
-                .id_user(id_user)
+                .email(user.getEmail())
+                .id_user(user.getId_user())
                 .token(jwtToken)
-                .name(name)
-                .lastName(lastName)
+                .name(user.getName())
+                .lastName(user.getLastName())
                 .build();
     }
 }
