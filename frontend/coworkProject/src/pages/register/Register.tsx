@@ -1,10 +1,10 @@
 
 const Register = () => {
-    return (
-        <>
-            <RegisterView />
-        </>
-    );
+  return (
+    <>
+      <RegisterView />
+    </>
+  );
 };
 
 export default Register;
