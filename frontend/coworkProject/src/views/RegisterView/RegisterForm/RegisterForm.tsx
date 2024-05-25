@@ -24,7 +24,7 @@ export const RegisterForm: React.FC = () => {
         <input
           type="text"
           id="fullName"
-          {...register("fullName", { required: "Full Name is required" })}
+          {...register("fullName", { required: "*Nombre Completo es requerido" })}
           className="bg-[#D9D9D9] border border-[#A67C52] text-gray-900 sm:text-sm rounded-lg focus:ring-[#31543D] focus:border-[#31543D] block w-full p-2.5"
         />
         {errors.fullName && <p className="mt-2 text-sm text-red-600">{errors.fullName.message}</p>}
@@ -35,7 +35,7 @@ export const RegisterForm: React.FC = () => {
         <input
           type="email"
           id="email"
-          {...register("email", { required: "Email is required", pattern: { value: /^\S+@\S+$/i, message: "Invalid email address" } })}
+          {...register("email", { required: "*Email es requerido", pattern: { value: /^\S+@\S+$/i, message: "*Direccion de email no valida" } })}
           className="bg-[#D9D9D9] border border-[#A67C52] text-gray-900 sm:text-sm rounded-lg focus:ring-[#31543D] focus:border-[#31543D] block w-full p-2.5"
         />
         {errors.email && <p className="mt-2 text-sm text-red-600">{errors.email.message}</p>}
@@ -46,7 +46,7 @@ export const RegisterForm: React.FC = () => {
         <input
           type="password"
           id="password"
-          {...register("password", { required: "Password is required", minLength: { value: 6, message: "Password must be at least 6 characters" } })}
+          {...register("password", { required: "*Contraseña es requerida", minLength: { value: 6, message: "*Contraseña debe tener al menos 6 caracteres" } })}
           className="bg-[#D9D9D9] border border-[#A67C52] text-gray-900 sm:text-sm rounded-lg focus:ring-[#31543D] focus:border-[#31543D] block w-full p-2.5"
         />
         {errors.password && <p className="mt-2 text-sm text-red-600">{errors.password.message}</p>}
@@ -58,8 +58,8 @@ export const RegisterForm: React.FC = () => {
           type="password"
           id="confirmPassword"
           {...register("confirmPassword", { 
-            required: "Please confirm your password", 
-            validate: value => value === password || "Passwords do not match"
+            required: "*Por favor, confirme su contraseña", 
+            validate: value => value === password || "Contraseñas no coinciden"
           })}
           className="bg-[#D9D9D9] border border-[#A67C52] text-gray-900 sm:text-sm rounded-lg focus:ring-[#31543D] focus:border-[#31543D] block w-full p-2.5"
         />
