@@ -43,9 +43,9 @@ export default function NavBar() {
         >
           Contacto
         </a>
-        <button className="mt-2 sm:mt-0 w-40   bg-black hover:bg-black/80 hover:text-slate-300 text-slate-100 py-3 px-6">
+        <a href="/login" className="mt-2 sm:mt-0 w-40   bg-black hover:bg-black/80 hover:text-slate-300 text-slate-100 py-3 px-6">
           Ingresar
-        </button>
+        </a>
       </div>
     </nav>
   );

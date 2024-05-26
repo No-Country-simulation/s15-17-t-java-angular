@@ -1,12 +1,6 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-
-interface IFormInput {
-  fullName: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-}
+import { IFormInput } from '../../../types/Types';
 
 export const RegisterForm: React.FC = () => {
   const { register, handleSubmit, watch, formState: { errors } } = useForm<IFormInput>();
