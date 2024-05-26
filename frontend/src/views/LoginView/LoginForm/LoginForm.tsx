@@ -16,7 +16,7 @@ export const LoginForm: React.FC = () => {
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 md:space-y-6" autoComplete="off">
       <div>
-        <label htmlFor="email" className="block mb-2 text-lg font-medium text-[#31543D]">Email</label>
+        <label htmlFor="email" className="block mb-2 text-base font-medium text-[#31543D]">Email</label>
         <input
           type="email"
           id="email"
@@ -37,7 +37,7 @@ export const LoginForm: React.FC = () => {
       </div>
 
       <div>
-        <label htmlFor="password" className="block mb-2 text-lg font-medium text-[#31543D]">Contraseña</label>
+        <label htmlFor="password" className="block mb-2 text-base font-medium text-[#31543D]">Contraseña</label>
         <input
           type="password"
           id="password"
@@ -62,7 +62,7 @@ export const LoginForm: React.FC = () => {
 
       <button
         type="submit"
-        className="w-full text-white bg-[#31543D] hover:bg-[#A67C52] focus:ring-4 focus:outline-none focus:ring-[#31543D] font-medium rounded-lg text-sm md:text-base px-5 py-2.5 text-center shadow-md hover:shadow-lg transition duration-150 ease-in-out"
+        className="w-full text-white bg-[#31543D] hover:bg-[#A67C52] focus:ring-4 focus:outline-none focus:ring-[#31543D] font-medium rounded-lg text-sm md:text-lg px-5 py-2.5 text-center shadow-md hover:shadow-lg transition duration-150 ease-in-out"
         disabled={!isValid}
       >
         Iniciar Sesión
