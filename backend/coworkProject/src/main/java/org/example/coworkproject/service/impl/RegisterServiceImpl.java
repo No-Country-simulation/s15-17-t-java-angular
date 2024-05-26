@@ -26,13 +26,9 @@ public class RegisterServiceImpl implements RegisterService {
     private PasswordEncoder passwordEncoder;
     @Autowired
     private JwtService jwtService;
-    @Autowired
-    private AuthenticationManager authenticationManager;
 
     @Override
-    public RegisterResponseDTO register(RegisterRequestDTO requestDTO) throws MyException {
-
-        validatePassword(requestDTO);
+    public RegisterResponseDTO register(RegisterRequestDTO requestDTO) {
 
         if (userRepository.existsByEmail(requestDTO.getEmail())) {
             throw new IllegalArgumentException("There is already a user registered with the email: " + requestDTO.getEmail());
@@ -43,11 +39,20 @@ public class RegisterServiceImpl implements RegisterService {
             return null;
         }
 
+        if (requestDTO.getPassword() == null || ExceptionMethods.onlySpaces(requestDTO.getPassword())) {
+            System.out.println("Password can't be null or empty.");
+            return null;
+        }
+
+        if (requestDTO.getFullName() == null || ExceptionMethods.onlySpaces(requestDTO.getFullName())) {
+            System.out.println("Name can't be null or empty.");
+            return null;
+        }
+
         var user = UserEntity.builder()
                 .email(requestDTO.getEmail())
                 .password(passwordEncoder.encode(requestDTO.getPassword()))
-                .name(requestDTO.getName())
-                .lastName(requestDTO.getLastName())
+                .fullName(requestDTO.getFullName())
                 .profilePicture(requestDTO.getProfilePicture())
                 .build();
 
@@ -57,30 +62,13 @@ public class RegisterServiceImpl implements RegisterService {
 
         Long id = user.getId_user();
         String email = user.getEmail();
-        String lastName = user.getLastName();
-        String name = user.getName();
-        String profilePicture = user.getProfilePicture();
+        String fullName = user.getFullName();
 
         return RegisterResponseDTO.builder()
                 .id(id)
-                .lastName(lastName)
-                .name(name)
+                .fullName(fullName)
                 .token(jwtToken)
                 .email(email)
                 .build();
     }
-
-
-    public void validatePassword(RegisterRequestDTO requestDTO) throws InvalidPasswordException {
-
-        if (!StringUtils.hasText(requestDTO.getPassword()) || !StringUtils.hasText(requestDTO.getRepeatedPassword())) {
-            throw new InvalidPasswordException("One or both passwords are empty.");
-        }
-
-        if (!requestDTO.getPassword().equals(requestDTO.getRepeatedPassword())) {
-            throw new InvalidPasswordException("Passwords don't match.");
-        }
-    }
-
-
 }
