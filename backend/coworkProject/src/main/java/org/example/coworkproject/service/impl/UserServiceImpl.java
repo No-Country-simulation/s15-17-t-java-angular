@@ -15,19 +15,12 @@ import java.util.List;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private UserRepository userRepository;
-    private UserMapper userMapper;
-    private PasswordEncoder passwordEncoder;
-
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, UserMapper userMapper, PasswordEncoder passwordEncoder) {
-        this.userRepository = userRepository;
-        this.userMapper = userMapper;
-        this.passwordEncoder = passwordEncoder;
-    }
-
-    public UserServiceImpl() {
-    }
+    private UserRepository userRepository;
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public UserResponseDTO changeUserPassword(Long id_user, String password) throws MyException {
