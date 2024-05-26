@@ -6,6 +6,6 @@ import org.example.coworkproject.exception.MyException;
 
 public interface RegisterService {
 
-    RegisterResponseDTO register(RegisterRequestDTO requestDTO) throws MyException;
+    RegisterResponseDTO register(RegisterRequestDTO requestDTO);
 
 }
