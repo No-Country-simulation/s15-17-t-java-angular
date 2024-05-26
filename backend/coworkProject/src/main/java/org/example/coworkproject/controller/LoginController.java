@@ -1,5 +1,6 @@
 package org.example.coworkproject.controller;
 
+import jakarta.validation.Valid;
 import org.example.coworkproject.dto.request.LoginRequestDTO;
 import org.example.coworkproject.dto.response.LoginResponseDTO;
 import org.example.coworkproject.dto.response.RegisterResponseDTO;
@@ -21,7 +22,7 @@ public class LoginController {
     private LoginService loginService;
 
     @PostMapping
-    public ResponseEntity<?> login(@RequestBody LoginRequestDTO requestDTO) throws MyException {
+    public ResponseEntity<?> login(@Valid @RequestBody LoginRequestDTO requestDTO) throws MyException {
 
         LoginResponseDTO loginResponseDTO = loginService.login(requestDTO);
 
