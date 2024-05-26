@@ -1,5 +1,8 @@
 package org.example.coworkproject.dto.request;
 
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -11,22 +14,17 @@ import lombok.ToString;
 @Builder
 public class RegisterRequestDTO {
 
-    private String name;
-    private String lastName;
+    @NotBlank(message = "Email is required.")
+    @Email(message = "Invalid email address.")
+    @Size(max = 50, message = "Email must not exceed 50 characters ")
     private String email;
+
+    @NotBlank(message = "Password is required.")
+    @Size(min = 6, message = "Password must be at least 6 characters.")
     private String password;
-    private String repeatedPassword;
+
+    @NotBlank(message = "Full name is required.")
+    private String fullName;
+
     private String profilePicture;
-
-    public RegisterRequestDTO() {
-    }
-
-    public RegisterRequestDTO(String name, String lastName, String email, String password, String repeatedPassword, String profilePicture) {
-        this.name = name;
-        this.lastName = lastName;
-        this.email = email;
-        this.password = password;
-        this.repeatedPassword = repeatedPassword;
-        this.profilePicture = profilePicture;
-    }
 }
