@@ -11,8 +11,6 @@ public class UserResponseDTO {
 
     private long id_user;
     private String email;
-    private String name;
-    private String lastName;
+    private String fullName;
     private String profilePicture;
-
 }
