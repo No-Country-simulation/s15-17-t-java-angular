@@ -1,5 +1,6 @@
 package org.example.coworkproject.controller;
 
+import jakarta.validation.Valid;
 import org.example.coworkproject.dto.request.RegisterRequestDTO;
 import org.example.coworkproject.dto.response.RegisterResponseDTO;
 import org.example.coworkproject.exception.MyException;
@@ -20,7 +21,7 @@ public class RegisterController {
     private RegisterService registerService;
 
     @PostMapping()
-    public ResponseEntity<RegisterResponseDTO> register(@RequestBody RegisterRequestDTO requestDTO) throws MyException {
+    public ResponseEntity<RegisterResponseDTO> register(@Valid @RequestBody RegisterRequestDTO requestDTO) throws MyException {
 
         RegisterResponseDTO registerResponseDTO = registerService.register(requestDTO);
 
