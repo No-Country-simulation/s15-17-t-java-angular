@@ -3,6 +3,7 @@ package org.example.coworkproject.configuration.security;
 import lombok.RequiredArgsConstructor;
 import org.example.coworkproject.repository.UserRepository;
 import org.example.coworkproject.exception.ObjectNotFoundException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -18,7 +19,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 @RequiredArgsConstructor
 public class AppConfig {
 
-    private final UserRepository userRepository;
+    @Autowired
+    private UserRepository userRepository;
 
     @Bean
     public UserDetailsService userDetailsService() {
