@@ -22,13 +22,11 @@ public class UserEntity implements UserDetails {
     private long id_user;
     private String email;
     private String password;
-    private String name;
-    private String lastName;
+    private String fullName;
 
     @ManyToMany
     private List<WorkspaceEntity> workSpaces;
     private String profilePicture;
-
 
 
     @Override
