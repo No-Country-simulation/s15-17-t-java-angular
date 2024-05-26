@@ -1,13 +1,13 @@
 import React from 'react';
 import { useForm, SubmitHandler } from 'react-hook-form';
-import { IFormInput } from '../../../types/Types';
+import { IRegisterFormInput } from '../../../types/Types';
 
 export const RegisterForm: React.FC = () => {
-  const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm<IFormInput>({ mode: 'onChange' });
+  const { register, handleSubmit, watch, formState: { errors, isValid } } = useForm<IRegisterFormInput>({ mode: 'onChange' });
 
   const password = watch("password", "");
 
-  const onSubmit: SubmitHandler<IFormInput> = (data) => {
+  const onSubmit: SubmitHandler<IRegisterFormInput> = (data) => {
     console.log(data);
   };
 
