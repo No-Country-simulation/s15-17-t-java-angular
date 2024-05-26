@@ -6,6 +6,6 @@ import org.example.coworkproject.exception.MyException;
 
 public interface LoginService {
 
-    public LoginResponseDTO login(LoginRequestDTO requestDTO) throws MyException;
+    LoginResponseDTO login(LoginRequestDTO requestDTO) throws MyException;
 
 }
