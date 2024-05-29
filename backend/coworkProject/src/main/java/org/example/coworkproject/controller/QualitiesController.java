@@ -1,7 +1,11 @@
 package org.example.coworkproject.controller;
 
+import org.example.coworkproject.dto.request.QualitiesRequestDTO;
+import org.example.coworkproject.dto.response.QualitiesResponseDTO;
+import org.example.coworkproject.dto.response.WorkspaceResponseDTO;
 import org.example.coworkproject.entity.QualitiesEntity;
 import org.example.coworkproject.service.QualitiesService;
+import org.example.coworkproject.service.impl.QualitiesServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,53 +14,84 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/qualities")
+@RequestMapping(value = "/v1/api/qualities")
 public class QualitiesController {
+
     @Autowired
     private QualitiesService qualitiesService;
 
-    @GetMapping
-    public ResponseEntity<List<QualitiesEntity>> getAllQualities() {
-        List<QualitiesEntity> qualities = qualitiesService.getAll();
-        return new ResponseEntity<>(qualities, HttpStatus.OK);
+    @GetMapping("/listOfQualities")
+    public ResponseEntity<List<QualitiesResponseDTO>> getAllQualities() {
+
+        List<QualitiesResponseDTO> qualitiesResponseListDTO = qualitiesService.getAllQualities();
+
+        if (qualitiesResponseListDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(qualitiesResponseListDTO);
+        }
     }
 
-    @GetMapping("/{id}")
-    public ResponseEntity<QualitiesEntity> getById(@PathVariable Long id) {
-        QualitiesEntity quality = qualitiesService.getById(id);
-        if(quality != null){
-            return ResponseEntity.ok().body(quality);
+    @GetMapping("/getQualityById/{id_qualities}")
+    public ResponseEntity<QualitiesResponseDTO> findQualityById(@PathVariable Long id_qualities) {
+
+        QualitiesResponseDTO qualitiesResponseDTO = qualitiesService.getQualityById(id_qualities);
+
+        if(qualitiesResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(qualitiesResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @PostMapping("/createQuality")
+    public ResponseEntity<QualitiesResponseDTO> createQuality(@RequestBody QualitiesRequestDTO qualitiesRequestDTO) {
+
+        QualitiesResponseDTO qualitiesResponseDTO = qualitiesService.createQuality(qualitiesRequestDTO);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(qualitiesResponseDTO);
+    }
+
+    @GetMapping("/getWorkspacesByQuality/{id_quality}")
+    public ResponseEntity<List<WorkspaceResponseDTO>> getWorkspacesByQuality(@PathVariable Long id_quality) {
+
+        QualitiesResponseDTO qualitiesResponseDTO = qualitiesService.getQualityById(id_quality);
+
+        if (qualitiesResponseDTO != null) {
+
+            List<WorkspaceResponseDTO> workspaceResponseListDTO = qualitiesService.getWorkspacesByQuality(id_quality);
+
+            if (workspaceResponseListDTO.isEmpty()) {
+                return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+            } else {
+                return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseListDTO);
+            }
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
 
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
-    public ResponseEntity<QualitiesEntity> create(@RequestBody QualitiesEntity body) {
-        QualitiesEntity quality = qualitiesService.create(body);
-        return ResponseEntity.ok(quality);
-    }
+    @PutMapping("/updateQuality/{id_qualities}")
+    public ResponseEntity<QualitiesResponseDTO> update(@PathVariable Long id_qualities, @RequestBody QualitiesRequestDTO updatedQualityRequestDTO) {
 
-    @PutMapping("/{id}")
-    public ResponseEntity<QualitiesEntity> update(@PathVariable Long id, @RequestBody QualitiesEntity workspace) {
-        QualitiesEntity qualityUpd = qualitiesService.update(id, workspace).orElse(null);
+        QualitiesResponseDTO qualitiesResponseDTO = qualitiesService.updateQuality(id_qualities, updatedQualityRequestDTO);
 
-        if (qualityUpd != null) {
-            return ResponseEntity.ok().body(qualityUpd);
+        if(qualitiesResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(qualitiesResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<QualitiesEntity> delete(@PathVariable Long id) {
-        QualitiesEntity quality = qualitiesService.delete(id);
+    @DeleteMapping("/deleteQuality/{id_qualities}")
+    public ResponseEntity<QualitiesResponseDTO> deleteQuality(@PathVariable Long id_qualities) {
+        QualitiesResponseDTO qualitiesResponseDTO = qualitiesService.deleteQuality(id_qualities);
 
-        if(quality != null){
-            return ResponseEntity.ok().body(quality);
+        if(qualitiesResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(qualitiesResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
-
 }
