@@ -1,6 +1,7 @@
 package org.example.coworkproject.controller;
 
-import org.example.coworkproject.entity.WorkspaceEntity;
+import org.example.coworkproject.dto.request.WorkspaceRequestDTO;
+import org.example.coworkproject.dto.response.WorkspaceResponseDTO;
 import org.example.coworkproject.service.WorkspaceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -10,64 +11,88 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping(value = "/v1/workspaces")
+@RequestMapping(value = "/v1/api/workspace")
 public class WorkspaceController {
 
     @Autowired
     private WorkspaceService workspaceService;
 
-    @GetMapping
-    public ResponseEntity<List<WorkspaceEntity>> getAll() {
-        List<WorkspaceEntity> workspaces = workspaceService.getAll();
-        return new ResponseEntity<>(workspaces, HttpStatus.OK);
-    }
+    @GetMapping("/listOfWorkspaces")
+    public ResponseEntity<List<WorkspaceResponseDTO>> getAllWorkspaces() {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<WorkspaceEntity> getById(@PathVariable Long id) {
-        WorkspaceEntity workspace = workspaceService.getById(id);
-        if(workspace != null){
-            return ResponseEntity.ok().body(workspace);
+        List<WorkspaceResponseDTO> workspaceResponseListDTO = workspaceService.getAllWorkspaces();
+
+        if (workspaceResponseListDTO.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.NO_CONTENT).body(null);
+        } else {
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseListDTO);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PostMapping
-    public ResponseEntity<WorkspaceEntity> create(@RequestBody WorkspaceEntity body) {
-        System.out.println("Request Body: " + body);
-        WorkspaceEntity workspace = workspaceService.create(body);
-        return ResponseEntity.ok(workspace);
-    }
+    @GetMapping("getWorkspaceById/{id_workspace}")
+    public ResponseEntity<WorkspaceResponseDTO> findWorkspaceById(@PathVariable Long id_workspace) {
 
-    @PostMapping("/add-quality-to-workspace/{idWorkspace}/{idQuality}")
-    public ResponseEntity<WorkspaceEntity> addQualityToWorkspace(@PathVariable Long idWorkspace, @PathVariable Long idQuality) {
-        WorkspaceEntity workspace = workspaceService.addQualityToWorkspace(idWorkspace, idQuality);
-        if(workspace != null){
-            return ResponseEntity.ok(workspace);
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.getWorkspaceById(id_workspace);
+        if(workspaceResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<WorkspaceEntity> update(@PathVariable Long id, @RequestBody WorkspaceEntity workspace) {
-        WorkspaceEntity workspaceUpd = workspaceService.update(id, workspace).orElse(null);
+    @PostMapping("/createWorkspace")
+    public ResponseEntity<WorkspaceResponseDTO> create(@RequestBody WorkspaceRequestDTO workspaceRequestDTO) {
 
-        if (workspaceUpd != null) {
-            return ResponseEntity.ok().body(workspaceUpd);
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.createWorkspace(workspaceRequestDTO);
+        return ResponseEntity.status(HttpStatus.CREATED).body(workspaceResponseDTO);
+    }
+
+    @PostMapping("/addQualityToWorkspace/{id_workspace}/{id_quality}")
+    public ResponseEntity<WorkspaceResponseDTO> addQualityToWorkspace(@PathVariable Long id_workspace, @PathVariable Long id_quality) {
+
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.addQualityToWorkspace(id_workspace, id_quality);
+
+        if(workspaceResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<WorkspaceEntity> delete(@PathVariable Long id) {
-        WorkspaceEntity workspace = workspaceService.delete(id);
+    @PostMapping("/removeQualityFromWorkspace/{id_workspace}/{id_quality}")
+    public ResponseEntity<WorkspaceResponseDTO> removeQualityFromWorkspace(@PathVariable Long id_workspace, @PathVariable Long id_quality) {
 
-        if(workspace != null){
-            return ResponseEntity.ok().body(workspace);
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.removeQualityFromWorkspace(id_workspace, id_quality);
+
+        if (workspaceResponseDTO != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
-
-        return new ResponseEntity<>(HttpStatus.NOT_FOUND);
     }
 
+
+    @PutMapping("/updateWorkspace/{id_workspace}")
+    public ResponseEntity<WorkspaceResponseDTO> update(@PathVariable Long id_workspace, @RequestBody WorkspaceRequestDTO updatedWorkspaceRequestDTO) {
+
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.updateWorkspace(id_workspace, updatedWorkspaceRequestDTO);
+
+        if(workspaceResponseDTO != null){
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    @DeleteMapping("/deleteWorkspace/{id_workspace}")
+    public ResponseEntity<WorkspaceResponseDTO> deleteWorkspace(@PathVariable Long id_workspace) {
+
+        WorkspaceResponseDTO workspaceResponseDTO = workspaceService.deleteWorkspace(id_workspace);
+
+        if (workspaceResponseDTO != null) {
+            return ResponseEntity.status(HttpStatus.OK).body(workspaceResponseDTO);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
 }
