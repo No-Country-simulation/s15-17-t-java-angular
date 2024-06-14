@@ -1,5 +1,6 @@
 package org.example.coworkproject.entity;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
@@ -23,10 +24,12 @@ public class UserEntity implements UserDetails {
     private String email;
     private String password;
     private String fullName;
-
-    @ManyToMany
-    private List<WorkspaceEntity> workSpaces;
     private String profilePicture;
+
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<ReservationEntity> reservations;
+
 
 
     @Override
